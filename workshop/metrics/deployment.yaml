@@ -14,7 +14,7 @@ spec:
       labels:
         app: paper
       annotations:
-        configmap-hash: "1"
+        configmap-hash: "2"
     spec:
       securityContext:
         fsGroup: 1000
@@ -42,6 +42,10 @@ spec:
               subPath: server.properties
             - name: world
               mountPath: /server/world
+            - name: exporter-config
+              mountPath: /server/plugins/PrometheusExporter/config.yml
+              subPath: config.yml
+              readOnly: true
           startupProbe:
             tcpSocket:
               port: 25565
@@ -59,3 +63,6 @@ spec:
         - name: world
           persistentVolumeClaim:
             claimName: paper-world
+        - name: exporter-config
+          configMap:
+            name: prometheus-exporter-config
