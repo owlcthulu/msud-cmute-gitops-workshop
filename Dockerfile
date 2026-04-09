@@ -15,7 +15,7 @@ RUN curl -o paper.jar -H "User-Agent: msud-workshop-student (https://github.com/
 # Exposes on: localhost:9940/metrics
 RUN mkdir -p plugins && \
     curl -L -o plugins/prometheus-exporter.jar \
-    https://github.com/sladkoff/minecraft-prometheus-exporter/releases/download/v3.1.0/prometheus-exporter-3.1.0.jar
+    https://github.com/sladkoff/minecraft-prometheus-exporter/releases/download/v3.1.2/minecraft-prometheus-exporter-3.1.2.jar
 
 RUN echo "eula=true" > eula.txt
 
