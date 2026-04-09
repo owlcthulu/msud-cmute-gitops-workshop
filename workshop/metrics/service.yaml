@@ -1,18 +1,17 @@
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
+apiVersion: v1
+kind: Service
 metadata:
-  name: paper-metrics
-  namespace: monitoring
+  name: paper
   labels:
-    release: prometheus-stack
+    app: paper
 spec:
-  namespaceSelector:
-    matchNames:
-      - paper
+  type: LoadBalancer
   selector:
-    matchLabels:
-      app: paper
-  endpoints:
-    - port: metrics
-      interval: 30s
-      path: /metrics
+    app: paper
+  ports:
+    - name: minecraft
+      port: 25565
+      targetPort: 25565
+    - name: metrics
+      port: 9940
+      targetPort: 9940

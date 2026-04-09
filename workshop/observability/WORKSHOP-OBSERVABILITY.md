@@ -4,19 +4,7 @@ Monitor your PaperMC server with Prometheus metrics and a Grafana dashboard.
 
 ## Prerequisites
 
-Make sure you have completed the main workshop setup and your PaperMC server is running.
-
-## Copy the metrics-enabled files
-
-Copy the updated Dockerfile, deployment, and service that include the Prometheus exporter plugin:
-
-```bash
-cp workshop/metrics/Dockerfile Dockerfile
-cp workshop/metrics/deployment.yaml k8s/deployment.yaml
-cp workshop/metrics/service.yaml k8s/service.yaml
-```
-
-Commit and push. Your CI will rebuild the image with the Prometheus exporter plugin, and ArgoCD will deploy the updated manifests.
+Make sure you have completed the main workshop setup and the Metrics section. Your PaperMC server should be running with the Prometheus exporter plugin.
 
 ## Install kube-prometheus-stack
 
@@ -55,27 +43,19 @@ kubectl apply -f workshop/observability/httproute.yaml
 
 ## Add the Grafana listener to your Gateway
 
-Add this listener to your `k8s/gateway.yaml` under `spec.listeners`:
+Copy the updated gateway file that includes the Grafana listener:
 
-```yaml
-    - name: grafana-https
-      protocol: HTTPS
-      port: 443
-      hostname: grafana.<YOUR_NAME>.mc.labs.cmute.cloud
-      tls:
-        mode: Terminate
-        certificateRefs:
-          - name: grafana-tls
-      allowedRoutes:
-        namespaces:
-          from: All
+```bash
+cp workshop/observability/gateway-patch.yaml k8s/gateway.yaml
 ```
+
+Edit `k8s/gateway.yaml` and replace `<YOUR_NAME>` in both the `argocd-https` and `grafana-https` listener hostnames.
 
 Commit and push. ArgoCD will sync the updated gateway.
 
 ## Create the DNS record
 
-Use the same Gateway IP as your Minecraft server:
+Get your Gateway IP:
 
 ```bash
 kubectl get gateway paper-gateway -n paper
