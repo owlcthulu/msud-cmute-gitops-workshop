@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     # Replace <YOUR_GITHUB_USERNAME> with your GitHub username.
-    repoURL: https://github.com/<YOUR_GITHUB_USERNAME>/msud-cmute-gitops-workshop.git
+    repoURL: https://github.com/owlcthulu/msud-cmute-gitops-workshop.git
     targetRevision: main
     path: k8s
   destination:
